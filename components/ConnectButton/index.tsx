@@ -19,7 +19,11 @@ function ConnectButton() {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const address = useAddress((state) => state.address);
   useEffect(() => {
-    if (location === "/onboard" || location === "/theme") {
+    if (
+      location === "/onboard" ||
+      location === "/theme" ||
+      location === "/editor"
+    ) {
       if (!address) {
         navigate("/");
       }

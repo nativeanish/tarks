@@ -1,35 +1,10 @@
 import Index from "../pages/Index";
-import {
-  createBrowserRouter,
-  RouterProvider,
-  useNavigate,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import OnBoard from "../pages/OnBoard";
-import { useEffect } from "react";
-import useAddress from "../store/useAddress";
 import Theme from "../pages/Theme";
-const Check = () => {
-  const navigate = useNavigate();
-  const address = useAddress((state) => state.address);
-  useEffect(() => {
-    window.addEventListener("arweaveWalletLoaded", () => {
-      if (!address) {
-        navigate("/");
-      }
-      window.arweaveWallet.getActiveAddress().then((address) => {
-        if (!address) {
-          navigate("/");
-        }
-      });
-    });
-  }, []);
-  return null;
-};
+import Editor from "../pages/Editor";
+import NotFound from "../pages/NotFound";
 const router = createBrowserRouter([
-  {
-    path: "*",
-    element: <Check />,
-  },
   {
     path: "/",
     element: <Index />,
@@ -41,6 +16,14 @@ const router = createBrowserRouter([
   {
     path: "/theme",
     element: <Theme />,
+  },
+  {
+    path: "/editor",
+    element: <Editor />,
+  },
+  {
+    path: "*",
+    element: <NotFound />,
   },
 ]);
 

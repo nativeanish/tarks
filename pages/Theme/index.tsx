@@ -3,9 +3,7 @@ import {
   FaArrowLeft as ChevronLeft,
   FaArrowRight as ChevronRight,
 } from "react-icons/fa";
-import useTheme, { theme } from "../../store/useTheme";
-import { useNavigate } from "react-router-dom";
-import useAddress from "../../store/useAddress";
+import { theme } from "../../store/useTheme";
 import ConnectButton from "../../components/ConnectButton";
 const images: Array<{ desktop: string; mobile: string; tag: theme }> = [
   {
@@ -46,42 +44,31 @@ const images: Array<{ desktop: string; mobile: string; tag: theme }> = [
 ];
 
 function Theme() {
-  const address = useAddress((state) => state.address);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
-  const setTheme = useTheme((state) => state.setTheme);
-  const theme = useTheme((state) => state.theme);
+
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
     checkMobile();
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
-  const router = useNavigate();
-  useEffect(() => {
-    if (theme) {
-      router(`/editor?theme=${theme}`);
-    }
-  }, [theme]);
-  useEffect(() => {
-    if (!address || !address?.length) {
-      router("/");
-    }
-  }, [address]);
+
   const goToPrevious = () => {
-    const isFirstSlide = currentIndex === 0;
-    const newIndex = isFirstSlide ? images.length - 1 : currentIndex - 1;
-    setCurrentIndex(newIndex);
+    setCurrentIndex((prevIndex) =>
+      prevIndex === 0 ? images.length - 1 : prevIndex - 1
+    );
   };
 
   const goToNext = () => {
-    const isLastSlide = currentIndex === images.length - 1;
-    const newIndex = isLastSlide ? 0 : currentIndex + 1;
-    setCurrentIndex(newIndex);
+    setCurrentIndex((prevIndex) =>
+      prevIndex === images.length - 1 ? 0 : prevIndex + 1
+    );
   };
 
   const handleApply = () => {
-    setTheme(images[currentIndex].tag);
+    // Here you would typically set the theme in your application
+    console.log(`Applying theme: ${images[currentIndex].tag}`);
   };
 
   return (
@@ -93,62 +80,64 @@ function Theme() {
           </div>
           <ConnectButton />
         </nav>
-      </div>
-      <div className="flex flex-col bg-black text-white">
-        <div className="relative flex-grow w-full">
-          <div className="absolute inset-0">
-            {isMobile ? (
-              <img
-                src={`./image/${images[currentIndex].mobile}`}
-                alt={`Theme ${images[currentIndex].tag}`}
-                className="w-full h-full object-cover"
-              />
-            ) : (
-              <img
-                src={`./image/${images[currentIndex].desktop}`}
-                alt={`Theme ${images[currentIndex].tag}`}
-                className="w-full h-full object-cover"
-              />
-            )}
-            <div className="absolute top-4 left-4 bg-black bg-opacity-50 text-white px-3 py-1 rounded">
-              {images[currentIndex].tag}
-            </div>
-          </div>
-          <button
-            onClick={goToPrevious}
-            className="text-black absolute rounded-md left-2 md:left-8 top-1/2 transform -translate-y-1/2 h-12 border-black border-2 p-2.5 bg-[#A6FAFF] hover:bg-[#79F7FF] hover:shadow-[2px_2px_0px_rgba(0,0,0,1)] active:bg-[#00E1EF] z-10"
-            aria-label="Previous slide"
-          >
-            <ChevronLeft size={28} />
-          </button>
-          <button
-            onClick={goToNext}
-            className="absolute text-black rounded-md right-2 md:right-8 top-1/2 transform -translate-y-1/2 h-12 border-black border-2 p-2.5 bg-[#A6FAFF] hover:bg-[#79F7FF] hover:shadow-[2px_2px_0px_rgba(0,0,0,1)] active:bg-[#00E1EF] z-10"
-            aria-label="Next slide"
-          >
-            <ChevronRight size={28} />
-          </button>
-          <div className="absolute bottom-0 left-0 right-0 flex flex-col items-center pb-8 gap-4">
-            <div className="flex gap-2 border-2 border-black p-2 rounded-full bg-[#f5f5f5]">
-              {images.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrentIndex(index)}
-                  className={`w-4 h-4 rounded-full border-2 border-black ${
-                    index === currentIndex ? "bg-[#A6FAFF]" : "bg-white"
-                  }`}
-                  aria-label={`Go to slide ${index + 1}`}
-                />
-              ))}
-            </div>
+        <main className="flex-grow flex flex-col items-center justify-center -mt-8">
+          {/* Carousel */}
+          <div className="relative w-full max-w-6xl aspect-video bg-white border-4 border-black">
+            <img
+              src={`/image/${
+                isMobile
+                  ? images[currentIndex].mobile
+                  : images[currentIndex].desktop
+              }`}
+              alt={`Theme ${images[currentIndex].tag}`}
+              className="w-full h-full object-cover"
+            />
             <button
-              onClick={handleApply}
-              className="h-14 pl-8 pr-8 border-black border-2 p-2.5 bg-[#A6FAFF] rounded-md hover:bg-[#79F7FF] hover:shadow-[2px_2px_0px_rgba(0,0,0,1)] active:bg-[#00E1EF] text-black text-2xl font-bold uppercase tracking-widest"
+              className="absolute top-1/2 left-4 -translate-y-1/2 bg-black text-yellow-400 border-2 border-yellow-400 hover:bg-yellow-400 hover:text-black p-2 rounded-full"
+              onClick={goToPrevious}
             >
-              Apply
+              <ChevronLeft className="h-8 w-8" />
+              <span className="sr-only">Previous theme</span>
+            </button>
+            <button
+              className="absolute top-1/2 right-4 -translate-y-1/2 bg-black text-yellow-400 border-2 border-yellow-400 hover:bg-yellow-400 hover:text-black p-2 rounded-full"
+              onClick={goToNext}
+            >
+              <ChevronRight className="h-8 w-8" />
+              <span className="sr-only">Next theme</span>
             </button>
           </div>
-        </div>
+
+          {/* Theme name and apply button */}
+          <div className="mt-8 flex flex-col items-center">
+            <h2 className="text-3xl font-bold mb-4 uppercase">
+              {images[currentIndex].tag}
+            </h2>
+            <button
+              className="bg-black text-yellow-400 text-xl py-3 px-8 hover:bg-yellow-400 hover:text-black border-2 border-black transition-colors"
+              onClick={handleApply}
+            >
+              APPLY THEME
+            </button>
+          </div>
+
+          {/* Indicator dots */}
+          <div className="mt-8 flex justify-center space-x-2">
+            {images.map((_, index) => (
+              <button
+                key={index}
+                className={`w-4 h-4 p-0 rounded-none ${
+                  index === currentIndex
+                    ? "bg-black"
+                    : "bg-white border-2 border-black hover:bg-yellow-400"
+                }`}
+                onClick={() => setCurrentIndex(index)}
+              >
+                <span className="sr-only">Theme {index + 1}</span>
+              </button>
+            ))}
+          </div>
+        </main>
       </div>
     </div>
   );
