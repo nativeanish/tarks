@@ -47,15 +47,36 @@ export default function Index() {
   }, [glitchComplete]);
 
   return (
-    <main className="min-h-screen bg-yellow-300 p-6 font-mono">
-      <nav className="flex items-center justify-between mb-20">
+    <main className="min-h-screen bg-yellow-300 p-6 font-mono relative overflow-hidden">
+      {/* Binary Rain Effect */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden">
+        {[...Array(20)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute text-black text-opacity-20 animate-binaryRain"
+            style={{
+              left: `${(i / 20) * 100}%`,
+              animationDelay: `${Math.random() * 5}s`,
+              animationDuration: `${5 + Math.random() * 5}s`,
+            }}
+          >
+            {[...Array(10)].map((_, j) => (
+              <div key={j} className="my-2">
+                {Math.random() > 0.5 ? "1" : "0"}
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
+
+      <nav className="flex items-center justify-between mb-20 relative z-10">
         <div className="text-2xl font-bold bg-black text-white px-4 py-2">
           <span className="text-yellow-300">META</span>Link
         </div>
         <ConnectButton />
       </nav>
 
-      <div className="max-w-4xl mx-auto mb-16">
+      <div className="max-w-4xl mx-auto mb-16 relative z-10">
         <h1 className="text-6xl md:text-8xl font-bold mb-8 leading-tight">
           <GlitchText text={glitchText1} />
           <br />
@@ -73,7 +94,7 @@ export default function Index() {
         </p>
       </div>
 
-      <div className="max-w-2xl mx-auto mb-20">
+      <div className="max-w-2xl mx-auto mb-20 relative z-10">
         <div className="bg-white border-4 border-black p-8 transform hover:translate-x-1 hover:translate-y-1 transition-transform">
           <div className="space-y-4">
             <div className="bg-black text-white p-4">

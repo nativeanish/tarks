@@ -18,6 +18,7 @@ function ConnectButton() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const address = useAddress((state) => state.address);
+
   useEffect(() => {
     if (
       location === "/onboard" ||
@@ -29,6 +30,7 @@ function ConnectButton() {
       }
     }
   }, [location, address]);
+
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (
@@ -54,14 +56,14 @@ function ConnectButton() {
   };
 
   return (
-    <div className="relative" ref={dropdownRef}>
+    <div className="relative z-50" ref={dropdownRef}>
       <button
         onClick={handleButtonClick}
-        className="bg-black p-4 hover:bg-black/90 text-white border-2 border-black hover:border-black/90 px-6 py-2 flex items-center gap-2 transition-colors"
+        className="bg-black p-4 hover:bg-black/90 text-white border-2 border-black hover:border-black/90 px-6 py-2 flex items-center gap-2 transition-colors relative"
       >
         {address?.length && address ? (
           <>
-            <div className="flex flex-row items-center gap-x-3 justify-center ">
+            <div className="flex flex-row items-center gap-x-3 justify-center">
               <FaUser />
               {address.slice(0, 6) + "..." + address.slice(-4)}
               <ChevronDown
@@ -81,7 +83,7 @@ function ConnectButton() {
       {address && address.length && isDropdownOpen && (
         <div className="absolute right-0 mt-2 w-48 bg-white border-2 border-black shadow-lg">
           <button
-            className="w-full text-left px-4 py-2 hover:bg-gray-200 transition-colors border-b-2 border-black flex flex-row items-center gap-x-3"
+            className="w-full text-left px-4 py-2 hover:bg-gray-200 transition-colors border-b-2 border-black flex flex-row items-center gap-x-3 bg-white"
             onClick={() => {
               navigate("/");
               setIsDropdownOpen(false);
@@ -93,13 +95,13 @@ function ConnectButton() {
           </button>
           <button
             disabled={location === "/dashboard"}
-            className="w-full text-left px-4 py-2 hover:bg-gray-200 transition-colors border-b-2 border-black flex flex-row items-center gap-x-3"
+            className="w-full text-left px-4 py-2 hover:bg-gray-200 transition-colors border-b-2 border-black flex flex-row items-center gap-x-3 bg-white"
           >
             <FaTachometerAlt />
             Dashboard
           </button>
           <button
-            className="w-full text-left px-4 py-2 hover:bg-gray-200 transition-colors border-b-2 border-black flex flex-row items-center gap-x-3"
+            className="w-full text-left px-4 py-2 hover:bg-gray-200 transition-colors border-b-2 border-black flex flex-row items-center gap-x-3 bg-white"
             onClick={() => {
               navigate("/onboard");
               setIsDropdownOpen(false);
@@ -110,7 +112,7 @@ function ConnectButton() {
             Create
           </button>
           <button
-            className="w-full text-left px-4 py-2 hover:bg-gray-200 transition-colors text-red-600 flex flex-row items-center gap-x-3"
+            className="w-full text-left px-4 py-2 hover:bg-gray-200 transition-colors text-red-600 flex flex-row items-center gap-x-3 bg-white"
             onClick={() => {
               disconnect();
               setIsDropdownOpen(false);

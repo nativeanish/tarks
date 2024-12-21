@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import "./index.css";
+import ConnectButton from "../../components/ConnectButton";
 export default function NotFound() {
   const [glitchText, setGlitchText] = useState("404");
   const [showGrid, setShowGrid] = useState(false);
@@ -58,6 +59,7 @@ export default function NotFound() {
         <div className="text-2xl font-bold bg-black text-white px-4 py-2">
           <span className="text-yellow-300">META</span>Link
         </div>
+        <ConnectButton />
       </nav>
 
       <div className="flex flex-col items-center justify-center p-2">
