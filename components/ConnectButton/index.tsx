@@ -9,7 +9,7 @@ import {
 } from "react-icons/fa";
 import { FaChevronDown as ChevronDown } from "react-icons/fa";
 import { useLocation, useNavigate } from "react-router-dom";
-import { connect, disconnect } from "../../utils/wallet";
+import { checkConnection, connect, disconnect } from "../../utils/wallet";
 import useAddress from "../../store/useAddress";
 
 function ConnectButton() {
@@ -29,6 +29,9 @@ function ConnectButton() {
         navigate("/");
       }
     }
+    window.addEventListener("arweaveWalletLoaded", async () => {
+      await checkConnection();
+    });
   }, [location, address]);
 
   useEffect(() => {

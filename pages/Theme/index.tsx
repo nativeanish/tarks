@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { ThemeCard } from "../../components/ThemeCard";
 import { FaStar, FaPalette, FaBolt, FaMousePointer } from "react-icons/fa";
 import ConnectButton from "../../components/ConnectButton";
+import { useNavigate } from "react-router-dom";
 const themes: Array<{ desktop: string; mobile: string; title: string }> = [
   {
     desktop: "classicLight.png",
@@ -41,6 +42,7 @@ const themes: Array<{ desktop: string; mobile: string; title: string }> = [
 ];
 
 export default function ThemesPage() {
+  const navigate = useNavigate();
   const [mounted, setMounted] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
@@ -125,7 +127,7 @@ export default function ThemesPage() {
                   title={theme.title}
                   desktopImage={theme.desktop}
                   mobileImage={theme.mobile}
-                  onApply={() => console.log(`Applying theme: ${theme.title}`)}
+                  onApply={() => navigate(`/editor?theme=${theme.title}`)}
                 />
               </div>
             ))}
