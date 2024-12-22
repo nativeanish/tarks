@@ -1,146 +1,160 @@
 import { useState, useEffect } from "react";
-import {
-  FaArrowLeft as ChevronLeft,
-  FaArrowRight as ChevronRight,
-} from "react-icons/fa";
-import { theme } from "../../store/useTheme";
+import { ThemeCard } from "../../components/ThemeCard";
+import { FaStar, FaPalette, FaBolt, FaMousePointer } from "react-icons/fa";
 import ConnectButton from "../../components/ConnectButton";
-const images: Array<{ desktop: string; mobile: string; tag: theme }> = [
+const themes: Array<{ desktop: string; mobile: string; title: string }> = [
   {
     desktop: "classicLight.png",
     mobile: "classicLightM.png",
-    tag: "classicLight",
+    title: "classicLight",
   },
   {
     desktop: "classicDark.png",
     mobile: "classicDarkM.png",
-    tag: "classicDark",
+    title: "classicDark",
   },
   {
     desktop: "classicBrut.png",
     mobile: "classicBrutM.png",
-    tag: "classicBrut",
+    title: "classicBrut",
   },
   {
     desktop: "bentoLight.png",
     mobile: "bentoLightM.png",
-    tag: "bentoLight",
+    title: "bentoLight",
   },
   {
     desktop: "bentoDark.png",
     mobile: "bentoDarkM.png",
-    tag: "bentoDark",
+    title: "bentoDark",
   },
   {
     desktop: "windowLight.png",
     mobile: "windowLightM.png",
-    tag: "windowLight",
+    title: "windowLight",
   },
   {
     desktop: "windowDark.png",
     mobile: "windowDarkM.png",
-    tag: "windowDark",
+    title: "windowDark",
   },
 ];
 
-function Theme() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
+export default function ThemesPage() {
+  const [mounted, setMounted] = useState(false);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
+    setMounted(true);
+
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({ x: e.clientX, y: e.clientY });
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
   }, []);
 
-  const goToPrevious = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? images.length - 1 : prevIndex - 1
-    );
-  };
-
-  const goToNext = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === images.length - 1 ? 0 : prevIndex + 1
-    );
-  };
-
-  const handleApply = () => {
-    // Here you would typically set the theme in your application
-    console.log(`Applying theme: ${images[currentIndex].tag}`);
-  };
+  if (!mounted) return null;
 
   return (
-    <div>
-      <div className="min-h-screen bg-yellow-300 flex flex-col p-4 sm:p-6 font-mono">
-        <nav className="flex items-center justify-between mb-8 sm:mb-16">
-          <div className="text-xl sm:text-2xl font-bold bg-black text-white px-3 py-1 sm:px-4 sm:py-2 rounded">
-            <span className="text-yellow-300">META</span>Link
-          </div>
-          <ConnectButton />
-        </nav>
-        <main className="flex-grow flex flex-col items-center justify-center -mt-8">
-          {/* Carousel */}
-          <div className="relative w-full max-w-6xl aspect-video bg-white border-4 border-black">
-            <img
-              src={`/image/${
-                isMobile
-                  ? images[currentIndex].mobile
-                  : images[currentIndex].desktop
-              }`}
-              alt={`Theme ${images[currentIndex].tag}`}
-              className="w-full h-full object-cover"
+    <div className="min-h-screen bg-yellow-300 font-mono relative overflow-hidden p-6">
+      <nav className="flex items-center justify-between mb-20 relative z-10">
+        <div className="text-2xl font-bold bg-black text-white px-4 py-2">
+          <span className="text-yellow-300">META</span>Link
+        </div>
+        <ConnectButton />
+      </nav>
+      <div className="p-2">
+        <div className="mx-auto max-w-7xl">
+          <div className="relative mb-12 overflow-hidden border-4 border-black bg-white p-8">
+            <div
+              className="absolute inset-0 bg-[radial-gradient(circle,_var(--tw-gradient-stops))] from-yellow-200 to-transparent opacity-50"
+              style={{
+                backgroundPosition: `${mousePosition.x / 5}px ${
+                  mousePosition.y / 5
+                }px`,
+                transition: "background-position 0.3s ease-out",
+              }}
             />
-            <button
-              className="absolute top-1/2 left-4 -translate-y-1/2 bg-black text-yellow-400 border-2 border-yellow-400 hover:bg-yellow-400 hover:text-black p-2 rounded-full"
-              onClick={goToPrevious}
-            >
-              <ChevronLeft className="h-8 w-8" />
-              <span className="sr-only">Previous theme</span>
-            </button>
-            <button
-              className="absolute top-1/2 right-4 -translate-y-1/2 bg-black text-yellow-400 border-2 border-yellow-400 hover:bg-yellow-400 hover:text-black p-2 rounded-full"
-              onClick={goToNext}
-            >
-              <ChevronRight className="h-8 w-8" />
-              <span className="sr-only">Next theme</span>
-            </button>
+            <h1 className="relative animate-in slide-in-from-left font-mono text-6xl font-black tracking-tight duration-700">
+              Select Your Theme
+            </h1>
+            <p className="relative mt-4 animate-in slide-in-from-left font-mono text-lg text-gray-700 duration-700 [--animate-delay:200ms]">
+              Choose from our collection of carefully crafted themes
+            </p>
+            <div className="relative mt-6 flex flex-wrap gap-4">
+              <div className="animate-in slide-in-from-left duration-700 [--animate-delay:400ms]">
+                <div className="inline-block rotate-3 border-2 border-black bg-yellow-300 px-4 py-2 font-mono text-sm font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-transform hover:rotate-0">
+                  <FaStar className="mr-2 inline-block h-4 w-4" />
+                  Unleash your creativity!
+                </div>
+              </div>
+              <div className="animate-in slide-in-from-left duration-700 [--animate-delay:500ms]">
+                <div className="inline-block -rotate-2 border-2 border-black bg-blue-300 px-4 py-2 font-mono text-sm font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-transform hover:rotate-0">
+                  <FaPalette className="mr-2 inline-block h-4 w-4" />
+                  Express your style
+                </div>
+              </div>
+              <div className="animate-in slide-in-from-left duration-700 [--animate-delay:600ms]">
+                <div className="inline-block rotate-1 border-2 border-black bg-green-300 px-4 py-2 font-mono text-sm font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-transform hover:rotate-0">
+                  <FaBolt className="mr-2 inline-block h-4 w-4" />
+                  Stand out from the crowd
+                </div>
+              </div>
+            </div>
+            <div className="absolute -bottom-6 -right-6 animate-bounce">
+              <div className="rotate-12 border-2 border-black bg-red-300 px-4 py-2 font-mono text-sm font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+                <FaMousePointer className="mr-2 inline-block h-4 w-4" />
+                Click to preview
+              </div>
+            </div>
           </div>
 
-          {/* Theme name and apply button */}
-          <div className="mt-8 flex flex-col items-center">
-            <h2 className="text-3xl font-bold mb-4 uppercase">
-              {images[currentIndex].tag}
-            </h2>
-            <button
-              className="bg-black text-yellow-400 text-xl py-3 px-8 hover:bg-yellow-400 hover:text-black border-2 border-black transition-colors"
-              onClick={handleApply}
-            >
-              APPLY THEME
-            </button>
-          </div>
-
-          {/* Indicator dots */}
-          <div className="mt-8 flex justify-center space-x-2">
-            {images.map((_, index) => (
-              <button
-                key={index}
-                className={`w-4 h-4 p-0 rounded-none ${
-                  index === currentIndex
-                    ? "bg-black"
-                    : "bg-white border-2 border-black hover:bg-yellow-400"
-                }`}
-                onClick={() => setCurrentIndex(index)}
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            {themes.map((theme, index) => (
+              <div
+                key={theme.title}
+                className="animate-in fade-in duration-700"
+                style={{ ["--animate-delay" as any]: `${index * 100}ms` }}
               >
-                <span className="sr-only">Theme {index + 1}</span>
-              </button>
+                <ThemeCard
+                  title={theme.title}
+                  desktopImage={theme.desktop}
+                  mobileImage={theme.mobile}
+                  onApply={() => console.log(`Applying theme: ${theme.title}`)}
+                />
+              </div>
             ))}
+
+            {/* More Coming Soon Card */}
+            <div
+              className="animate-in fade-in duration-700"
+              style={{ ["--animate-delay" as any]: `${themes.length * 100}ms` }}
+            >
+              <div className="group relative border-4 border-black bg-white p-4 transition-all duration-300 hover:-translate-y-2 hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+                <div className="aspect-video animate-pulse border-2 border-black bg-gray-200">
+                  <div className="flex h-full items-center justify-center">
+                    <span className="font-mono text-4xl font-bold text-gray-400">
+                      ?
+                    </span>
+                  </div>
+                </div>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="rotate-[-4deg] border-2 border-black bg-yellow-300 px-4 py-2 transition-all duration-300 group-hover:rotate-0">
+                    <h3 className="font-mono text-xl font-bold">
+                      More Coming Soon
+                    </h3>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-        </main>
+        </div>
       </div>
     </div>
   );
 }
-
-export default Theme;
