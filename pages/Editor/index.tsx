@@ -1,9 +1,13 @@
 import { useState } from "react";
 import ConnectButton from "../../components/ConnectButton";
 import DeviceMockup from "../../components/DeviceMockUp";
+import ImageUploader from "../../components/Editor/ImageUploader";
+import { Input } from "../../components/Input";
+import { TextArea } from "../../components/TextArea";
 
 function Editor() {
-  const [splitPosition] = useState(50);
+  const [splitPosition] = useState(25);
+  const [text, setText] = useState("");
   return (
     <div
       id="main"
@@ -18,9 +22,13 @@ function Editor() {
       <div className="flex flex-1 overflow-hidden">
         <div
           id="left-panel"
-          className="overflow-y-auto"
+          className="flex flex-col items-center justify-start p-3 overflow-y-auto w-full gap-y-6"
           style={{ width: `${splitPosition}%` }}
-        ></div>
+        >
+          <ImageUploader />
+          <Input value={text} onChange={(e) => setText(e)} width="w-full" />
+          <TextArea value={text} onChange={(e) => setText(e)} width="w-full" />
+        </div>
         <div
           id="right-panel"
           className="bg-yellow-300 overflow-y-auto flex items-center justify-center"
