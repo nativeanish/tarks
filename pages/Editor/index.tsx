@@ -6,8 +6,9 @@ import { Input } from "../../components/Input";
 import { TextArea } from "../../components/TextArea";
 
 function Editor() {
-  const [splitPosition] = useState(25);
   const [text, setText] = useState("");
+  const [description, setDescription] = useState("");
+
   return (
     <div
       id="main"
@@ -19,26 +20,29 @@ function Editor() {
         </div>
         <ConnectButton />
       </nav>
-      <div className="flex flex-1 overflow-hidden">
-        <div
-          id="left-panel"
-          className="flex flex-col items-center justify-start p-3 overflow-y-auto w-full gap-y-6"
-          style={{ width: `${splitPosition}%` }}
-        >
+      <div className="flex flex-1 gap-6 overflow-hidden">
+        {/* Left Panel - 25% */}
+        <div className="w-1/4 flex flex-col gap-6  border-4 border-black p-6 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] overflow-auto bg-white items-center">
+          <h2 className="text-2xl font-bold uppercase border-b-4 border-black pb-4">
+            Edit Content
+          </h2>
           <ImageUploader />
           <Input value={text} onChange={(e) => setText(e)} width="w-full" />
-          <TextArea value={text} onChange={(e) => setText(e)} width="w-full" />
+          <TextArea
+            value={description}
+            onChange={(e) => setDescription(e)}
+            width="w-full"
+          />
         </div>
-        <div
-          id="right-panel"
-          className="bg-yellow-300 overflow-y-auto flex items-center justify-center"
-          style={{ width: `${100 - splitPosition}%` }}
-        >
+
+        {/* Right Panel - 75% */}
+        <div className="w-3/4 overflow-auto">
           <DeviceMockup>
             <div className="space-y-4">
-              <h1 className="text-2xl font-bold">Mobile Title</h1>
+              <h1 className="text-2xl font-bold">Your Content</h1>
               <p className="text-sm">
-                This content will display in a mobile-friendly way
+                This is a preview of how your content will look on different
+                devices
               </p>
             </div>
           </DeviceMockup>

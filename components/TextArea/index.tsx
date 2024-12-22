@@ -20,7 +20,6 @@ export function TextArea({ value, onChange, width }: TextAreaProps) {
         transition-all 
         duration-300
         ${width}
-        h-52
       `}
       animate={{
         boxShadow: isFocused
@@ -31,7 +30,7 @@ export function TextArea({ value, onChange, width }: TextAreaProps) {
       }}
     >
       <motion.label
-        className="absolute -top-3 left-2 bg-yellow-300 px-2 font-mono text-sm font-bold"
+        className="absolute -top-3 left-2 bg-white px-2 font-mono text-sm font-bold"
         animate={{
           scale: isFocused ? 1.1 : 1,
           x: isFocused ? -5 : 0,
@@ -50,7 +49,7 @@ export function TextArea({ value, onChange, width }: TextAreaProps) {
           value={value}
           onChange={(e) => onChange(e.target.value)}
           rows={4}
-          className="w-full resize-none bg-transparent px-4 py-3 font-mono text-lg font-bold placeholder:text-black/30 outline-none"
+          className="w-full resize-none bg-yellow-300 px-4 py-3 font-mono text-lg font-bold placeholder:text-black/30 outline-none"
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
         />

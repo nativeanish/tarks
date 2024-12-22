@@ -30,7 +30,7 @@ export function Input({ value, onChange, width }: InputProps) {
       }}
     >
       <motion.label
-        className="absolute -top-3 left-2 bg-yellow-300 px-2 font-mono text-sm font-bold"
+        className="absolute -top-3 left-2 bg-white px-2 font-mono text-sm font-bold"
         animate={{
           scale: isFocused ? 1.1 : 1,
           x: isFocused ? -5 : 0,
@@ -49,7 +49,7 @@ export function Input({ value, onChange, width }: InputProps) {
           placeholder="John Doe"
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="w-full bg-transparent px-4 py-3 font-mono text-lg font-bold placeholder:text-black/30 outline-none"
+          className="w-full bg-yellow-300 px-4 py-3 font-mono text-lg font-bold placeholder:text-black/30 outline-none"
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
         />
