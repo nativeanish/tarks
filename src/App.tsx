@@ -4,6 +4,7 @@ import OnBoard from "../pages/OnBoard";
 import Theme from "../pages/Theme";
 import Editor from "../pages/Editor";
 import NotFound from "../pages/NotFound";
+import Publish from "../pages/Publish";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
   {
     path: "/editor",
     element: <Editor />,
+  },
+  {
+    path: "/publish",
+    element: <Publish />,
   },
   {
     path: "*",
