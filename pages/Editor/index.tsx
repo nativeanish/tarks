@@ -4,11 +4,14 @@ import DeviceMockup from "../../components/DeviceMockUp";
 import ImageUploader from "../../components/Editor/ImageUploader";
 import { Input } from "../../components/Input";
 import { TextArea } from "../../components/TextArea";
+import SearchBar from "../../components/SearchBar";
+import useLink from "../../store/useLink";
+import { LinkDisplay } from "../../components/LinkDisplay";
 
 function Editor() {
   const [text, setText] = useState("");
   const [description, setDescription] = useState("");
-
+  const link = useLink((state) => state.link);
   return (
     <div
       id="main"
@@ -33,6 +36,10 @@ function Editor() {
             onChange={(e) => setDescription(e)}
             width="w-full"
           />
+          <SearchBar />
+          {link.map((l, e) => (
+            <LinkDisplay key={e} id={l.id} />
+          ))}
         </div>
 
         {/* Right Panel - 75% */}
