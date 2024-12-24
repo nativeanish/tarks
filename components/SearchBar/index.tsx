@@ -1,15 +1,15 @@
 import { useState, useEffect, useRef } from "react";
 import { FaSearch } from "react-icons/fa";
 import AllLink from "../../utils/AllLink";
-import useLink from "../../store/useLink";
 import { uuidv7 } from "uuidv7";
 import { IconType } from "react-icons/lib";
+import useProfile from "../../store/useProfile";
 export default function SearchBar() {
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [filteredSuggestions, setFilteredSuggestions] = useState(AllLink);
   const searchRef = useRef<HTMLDivElement>(null);
-  const setLink = useLink((state) => state.setLink);
+  const setLink = useProfile((state) => state.setLink);
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -24,7 +24,19 @@ export default function SearchBar() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
   const handleSave = (name: string, icon: IconType) => {
-    setLink({ name, icon, url: "", id: uuidv7() });
+    const link = AllLink.find((item) => item.name === name);
+    if (link) {
+      setLink({
+        name,
+        icon,
+        url: "",
+        uuid: uuidv7(),
+        iconName: name,
+        className: link.className,
+        arweave: link.arweave,
+      });
+      setQuery("");
+    }
   };
   useEffect(() => {
     if (query) {

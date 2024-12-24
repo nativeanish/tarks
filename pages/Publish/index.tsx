@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import ConnectButton from "../../components/ConnectButton";
 import { FaCheck, FaSpinner } from "react-icons/fa";
-import "./index.css";
 import BG from "./BG";
 const steps = [
   "Uploading Image",

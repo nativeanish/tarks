@@ -2,10 +2,12 @@ import { FaUpload } from "react-icons/fa";
 import TooltipButton from "../../ToolTipButton";
 import { HiRefresh } from "react-icons/hi";
 import { getRandomAvatar } from "@fractalsoftware/random-avatar-generator";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect } from "react";
+import useProfile from "../../../store/useProfile";
 
 function ImageUploader() {
-  const [image, setImage] = useState<string | null>(null);
+  const image = useProfile((state) => state.image);
+  const setImage = useProfile((state) => state.setImage);
 
   // Generate avatar only on the client side
   useEffect(() => {

@@ -22,5 +22,13 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src", "pages", "contants", "components", "store", "utils"]
+  "include": [
+    "src",
+    "pages",
+    "contants",
+    "components",
+    "store",
+    "utils",
+    "theme"
+  ]
 }

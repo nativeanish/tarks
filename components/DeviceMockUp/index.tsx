@@ -7,7 +7,7 @@ interface MobileDeviceMockupProps {
 }
 
 const DeviceMockup: React.FC<MobileDeviceMockupProps> = ({ children }) => {
-  const [view, setView] = useState<"desktop" | "mobile">("desktop");
+  const [view, setView] = useState<"desktop" | "mobile">("mobile");
 
   return (
     <div className="w-full h-full flex flex-col">

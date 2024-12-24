@@ -3,43 +3,7 @@ import { ThemeCard } from "../../components/ThemeCard";
 import { FaStar, FaPalette, FaBolt, FaMousePointer } from "react-icons/fa";
 import ConnectButton from "../../components/ConnectButton";
 import { useNavigate } from "react-router-dom";
-const themes: Array<{ desktop: string; mobile: string; title: string }> = [
-  {
-    desktop: "classicLight.png",
-    mobile: "classicLightM.png",
-    title: "classicLight",
-  },
-  {
-    desktop: "classicDark.png",
-    mobile: "classicDarkM.png",
-    title: "classicDark",
-  },
-  {
-    desktop: "classicBrut.png",
-    mobile: "classicBrutM.png",
-    title: "classicBrut",
-  },
-  {
-    desktop: "bentoLight.png",
-    mobile: "bentoLightM.png",
-    title: "bentoLight",
-  },
-  {
-    desktop: "bentoDark.png",
-    mobile: "bentoDarkM.png",
-    title: "bentoDark",
-  },
-  {
-    desktop: "windowLight.png",
-    mobile: "windowLightM.png",
-    title: "windowLight",
-  },
-  {
-    desktop: "windowDark.png",
-    mobile: "windowDarkM.png",
-    title: "windowDark",
-  },
-];
+import themes from "../../constants/themes";
 
 export default function ThemesPage() {
   const navigate = useNavigate();

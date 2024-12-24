@@ -1,17 +1,34 @@
-import { useState } from "react";
 import ConnectButton from "../../components/ConnectButton";
 import DeviceMockup from "../../components/DeviceMockUp";
 import ImageUploader from "../../components/Editor/ImageUploader";
 import { Input } from "../../components/Input";
 import { TextArea } from "../../components/TextArea";
 import SearchBar from "../../components/SearchBar";
-import useLink from "../../store/useLink";
 import { LinkDisplay } from "../../components/LinkDisplay";
+import useProfile from "../../store/useProfile";
+import ClassicLight from "../../theme/ClassicLight";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { useEffect } from "react";
+import themes from "../../constants/themes";
 
 function Editor() {
-  const [text, setText] = useState("");
-  const [description, setDescription] = useState("");
-  const link = useLink((state) => state.link);
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  // Access the 'theme' query parameter
+  const _theme = searchParams.get("theme");
+  const theme = themes.find((t) => t.title === _theme);
+  useEffect(() => {
+    if (!theme) {
+      navigate("/theme");
+    }
+  }, [theme]);
+
+  const name = useProfile((state) => state.name);
+  const setName = useProfile((state) => state.setName);
+  const description = useProfile((state) => state.description);
+  const setDescription = useProfile((state) => state.setDescription);
+  const link = useProfile((state) => state.links);
+  const image = useProfile((state) => state.image);
   return (
     <div
       id="main"
@@ -30,7 +47,7 @@ function Editor() {
             Edit Content
           </h2>
           <ImageUploader />
-          <Input value={text} onChange={(e) => setText(e)} width="w-full" />
+          <Input value={name} onChange={(e) => setName(e)} width="w-full" />
           <TextArea
             value={description}
             onChange={(e) => setDescription(e)}
@@ -38,20 +55,19 @@ function Editor() {
           />
           <SearchBar />
           {link.map((l, e) => (
-            <LinkDisplay key={e} id={l.id} />
+            <LinkDisplay key={e} id={l.uuid} />
           ))}
         </div>
 
         {/* Right Panel - 75% */}
         <div className="w-3/4 overflow-auto">
           <DeviceMockup>
-            <div className="space-y-4">
-              <h1 className="text-2xl font-bold">Your Content</h1>
-              <p className="text-sm">
-                This is a preview of how your content will look on different
-                devices
-              </p>
-            </div>
+            <ClassicLight
+              name={name}
+              description={description}
+              image={image}
+              links={link}
+            />
           </DeviceMockup>
         </div>
       </div>

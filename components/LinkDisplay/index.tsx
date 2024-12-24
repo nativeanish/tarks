@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { FaLink, FaTimes, FaPen, FaSave } from "react-icons/fa";
-import useLink from "../../store/useLink";
 import { IconType } from "react-icons/lib";
+import useProfile from "../../store/useProfile";
 
 interface LinkDisplayProps {
   id: string;
 }
 
 export function LinkDisplay({ id }: LinkDisplayProps) {
-  const getLink = useLink((state) => state.getLink);
+  const getLink = useProfile((state) => state.getLink);
   const [link, setLink] = useState<null | {
     name: string;
     url: string;
@@ -24,8 +24,8 @@ export function LinkDisplay({ id }: LinkDisplayProps) {
     setName(link.name);
     setUrl(link.url);
   }, [id]);
-  const onChange = useLink((state) => state.onChange);
-  const onClose = useLink((state) => state.onDelete);
+  const onChange = useProfile((state) => state.onChange);
+  const onClose = useProfile((state) => state.onDelete);
   const [isEditing, setIsEditing] = useState(false);
   const [name, setName] = useState(link?.name || "");
   const [url, setUrl] = useState(link?.url || "");
