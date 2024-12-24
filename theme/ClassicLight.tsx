@@ -1,5 +1,3 @@
-import { IconType } from "react-icons/lib";
-
 interface Props {
   name: string;
   image: string;
@@ -7,7 +5,6 @@ interface Props {
   links?: Array<{
     name: string;
     url: string;
-    icon: IconType;
     uuid: string;
     iconName: string;
     className: string;
@@ -19,7 +16,10 @@ const ClassicLight = (props: Props) => {
   return (
     <>
       <div className="min-h-screen py-12 px-4 sm:px-6 lg:px-8 bg-white">
-        <button className="fixed border-2 border-black top-4 right-4 md:top-8 md:right-8 z-10 flex items-center justify-center px-4 py-2 glass-effect text-gray-900 rounded-full shadow-lg hover:shadow-xl transition-all duration-300">
+        <button
+          id="share"
+          className="fixed border-2 border-black top-4 right-4 md:top-8 md:right-8 z-10 flex items-center justify-center px-4 py-2 glass-effect text-gray-900 rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="16"
@@ -53,7 +53,7 @@ const ClassicLight = (props: Props) => {
             )}
             <div className="space-y-4">
               {props.name && props.name.length > 0 && (
-                <h1 className="text-2xl font-semibold text-gray-900 tracking-tight hover:tracking-wide transition-all duration-300">
+                <h1 className="text-5xl font-semibold text-gray-900 tracking-tight hover:tracking-wide transition-all duration-300">
                   {props.name}
                 </h1>
               )}

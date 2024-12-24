@@ -6,10 +6,10 @@ import { TextArea } from "../../components/TextArea";
 import SearchBar from "../../components/SearchBar";
 import { LinkDisplay } from "../../components/LinkDisplay";
 import useProfile from "../../store/useProfile";
-import ClassicLight from "../../theme/ClassicLight";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect } from "react";
 import themes from "../../constants/themes";
+import BentoDark from "../../theme/BentoDark";
 
 function Editor() {
   const [searchParams] = useSearchParams();
@@ -62,7 +62,7 @@ function Editor() {
         {/* Right Panel - 75% */}
         <div className="w-3/4 overflow-auto">
           <DeviceMockup>
-            <ClassicLight
+            <BentoDark
               name={name}
               description={description}
               image={image}
