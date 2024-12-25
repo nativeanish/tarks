@@ -10,6 +10,12 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect } from "react";
 import themes from "../../constants/themes";
 import BentoDark from "../../theme/BentoDark";
+import { FaUpload } from "react-icons/fa";
+import { generate } from "../../utils/generate";
+import ClassicLight from "../../theme/ClassicLight";
+import ClassicDark from "../../theme/ClassicDark";
+import ClassicBrut from "../../theme/ClassicBrut";
+import BentoLight from "../../theme/BentoLight";
 
 function Editor() {
   const [searchParams] = useSearchParams();
@@ -17,11 +23,13 @@ function Editor() {
   // Access the 'theme' query parameter
   const _theme = searchParams.get("theme");
   const theme = themes.find((t) => t.title === _theme);
+  const view = searchParams.get("view");
   useEffect(() => {
     if (!theme) {
       navigate("/theme");
     }
-  }, [theme]);
+    console.log(view);
+  }, [theme, view]);
 
   const name = useProfile((state) => state.name);
   const setName = useProfile((state) => state.setName);
@@ -57,17 +65,59 @@ function Editor() {
           {link.map((l, e) => (
             <LinkDisplay key={e} id={l.uuid} />
           ))}
+          <button
+            onClick={() => generate({ name, image, description, links: link })}
+            className="flex w-full items-center shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] justify-center gap-x-2 border-2 border-black bg-yellow-300 p-2
+                     font-mono font-bold transition-all duration-200 hover:-translate-y-0.5 
+                     hover:bg-yellow-400 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:translate-y-0"
+          >
+            <FaUpload className="h-4 w-4" />
+            Upload
+          </button>
         </div>
 
         {/* Right Panel - 75% */}
         <div className="w-3/4 overflow-auto">
-          <DeviceMockup>
-            <BentoDark
-              name={name}
-              description={description}
-              image={image}
-              links={link}
-            />
+          <DeviceMockup _view={view || "mobile"}>
+            {theme?.title === "BentoDark" && (
+              <BentoDark
+                name={name}
+                description={description}
+                image={image}
+                links={link}
+              />
+            )}
+            {theme?.title === "ClassicLight" && (
+              <ClassicLight
+                name={name}
+                description={description}
+                image={image}
+                links={link}
+              />
+            )}
+            {theme?.title === "ClassicDark" && (
+              <ClassicDark
+                name={name}
+                description={description}
+                image={image}
+              />
+            )}
+            {theme?.title === "ClassicBrut" && (
+              <ClassicBrut
+                name={name}
+                description={description}
+                image={image}
+                links={link}
+              />
+            )}
+            {theme?.title === "BentoLight" && (
+              <BentoLight
+                name={name}
+                description={description}
+                image={image}
+                links={link}
+              />
+            )}
           </DeviceMockup>
         </div>
       </div>

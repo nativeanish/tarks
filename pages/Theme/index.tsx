@@ -91,7 +91,9 @@ export default function ThemesPage() {
                   title={theme.title}
                   desktopImage={theme.desktop}
                   mobileImage={theme.mobile}
-                  onApply={() => navigate(`/editor?theme=${theme.title}`)}
+                  onApply={() =>
+                    navigate(`/editor?theme=${theme.title}&view=${theme.view}`)
+                  }
                 />
               </div>
             ))}

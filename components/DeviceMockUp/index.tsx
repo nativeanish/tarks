@@ -1,14 +1,26 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaDesktop, FaMobile } from "react-icons/fa";
 
 interface MobileDeviceMockupProps {
   children: React.ReactNode;
   deviceColor?: "black" | "white" | "gold";
+  _view?: string;
 }
 
-const DeviceMockup: React.FC<MobileDeviceMockupProps> = ({ children }) => {
-  const [view, setView] = useState<"desktop" | "mobile">("mobile");
-
+const DeviceMockup: React.FC<MobileDeviceMockupProps> = ({
+  children,
+  _view,
+}) => {
+  const [view, setView] = useState<"desktop" | "mobile" | null>(null);
+  useEffect(() => {
+    if (_view === "desktop") {
+      setView("desktop");
+    } else if (_view === "mobile") {
+      setView("mobile");
+    } else {
+      setView("mobile");
+    }
+  }, [view]);
   return (
     <div className="w-full h-full flex flex-col">
       {/* Device Frame */}
