@@ -64,7 +64,7 @@ function BentoDark(props: Props) {
 
           <div className="flex space-x-4">
             <div className="relative">
-              <BentoButton className="flex items-center gap-2">
+              <BentoButton className="flex items-center gap-2" id="share">
                 <BsShare className="h-5 w-5" />
                 Share Profile
               </BentoButton>
@@ -72,6 +72,7 @@ function BentoDark(props: Props) {
             <BentoButton
               onClick={() => window.open("#", "_blank")}
               className="flex items-center gap-2"
+              id="create"
             >
               <BsPencilSquare className="h-5 w-5" />
               Create Your Own
@@ -88,6 +89,7 @@ function BentoDark(props: Props) {
                       target="_blank"
                       href={item.url}
                       id={item.uuid}
+                      data-name={item.iconName}
                       className={`group relative block transform rounded-lg border-2 border-black bg-gray-800 p-6 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:rotate-3`}
                     >
                       <div className="flex items-center space-x-3">

@@ -1,4 +1,3 @@
-import useProfile from "../store/useProfile";
 import ReactDOMServer from "react-dom/server";
 import ClassicLight from "../theme/ClassicLight";
 import { IconType } from "react-icons/lib";

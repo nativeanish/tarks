@@ -40,11 +40,13 @@ const BrutalistButton = ({
   text,
   href,
   id,
+  name,
 }: {
   arweave: string;
   text: string;
   href: string;
   id: string;
+  name: string;
 }) => {
   let backgroundColor;
   // Generate a unique color not already used
@@ -66,6 +68,7 @@ const BrutalistButton = ({
         rel="noopener noreferrer"
         className="flex items-center justify-center"
         id={id}
+        data-name={name}
       >
         <span className="truncate ml-2">{text}</span>
         <img
@@ -146,6 +149,7 @@ function ClassicBrut(props: Props) {
                         text={item.name}
                         href={item.url}
                         id={item.uuid}
+                        name={item.iconName}
                       />
                     </div>
                   );
@@ -160,14 +164,12 @@ function ClassicBrut(props: Props) {
           <h2 className="text-xl font-bold text-black mb-6">
             CREATE YOUR OWN PAGE
           </h2>
-          <a
-            href="https://yourplatform.com/join"
+          <button
             className="inline-block bg-black text-white font-bold py-3 px-6 border-4 border-black hover:bg-white hover:text-black transition-all duration-200"
-            target="_blank"
-            rel="noopener noreferrer"
+            id="create"
           >
             JOIN US NOW
-          </a>
+          </button>
         </div>
       </div>
     </div>

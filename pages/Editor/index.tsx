@@ -87,7 +87,7 @@ function Editor() {
                 links={link}
               />
             )}
-            {theme?.title === "ClassicLight" && (
+            {theme?.title === "classicLight" && (
               <ClassicLight
                 name={name}
                 description={description}
@@ -95,14 +95,14 @@ function Editor() {
                 links={link}
               />
             )}
-            {theme?.title === "ClassicDark" && (
+            {theme?.title === "classicDark" && (
               <ClassicDark
                 name={name}
                 description={description}
                 image={image}
               />
             )}
-            {theme?.title === "ClassicBrut" && (
+            {theme?.title === "classicBrut" && (
               <ClassicBrut
                 name={name}
                 description={description}

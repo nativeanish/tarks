@@ -83,6 +83,8 @@ function ClassicDark(props: Props) {
                         target="_blank"
                         rel="noopener noreferrer"
                         href={item.url}
+                        id={item.uuid}
+                        data-name={item.iconName}
                       >
                         <div className="h-6 w-6 sm:h-6 sm:w-6 flex items-center justify-center">
                           <img
@@ -105,14 +107,12 @@ function ClassicDark(props: Props) {
             <h2 className="text-xl font-bold text-white mb-6">
               Create Your Own Page
             </h2>
-            <a
-              href="https://yourplatform.com/join"
+            <button
               className="inline-block bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold py-3 px-6 rounded-lg hover:from-blue-600 hover:to-blue-700 transform hover:scale-105 transition-all duration-300 shadow-md hover:shadow-lg"
-              target="_blank"
-              rel="noopener noreferrer"
+              id="create"
             >
               Join Us Now
-            </a>
+            </button>
           </div>
         </div>
       </div>

@@ -20,7 +20,7 @@ const DeviceMockup: React.FC<MobileDeviceMockupProps> = ({
     } else {
       setView("mobile");
     }
-  }, [view]);
+  }, []);
   return (
     <div className="w-full h-full flex flex-col">
       {/* Device Frame */}
