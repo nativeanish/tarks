@@ -5,6 +5,7 @@ import turbo from "./turbo";
 import { SERVER_URL } from "../constants";
 import { generateMetaTags, generatePage } from "./generate";
 import { uuidv7 } from "uuidv7";
+import { register } from "./aos";
 export default async function upload(theme: string) {
   useArns.setState({ loading: true });
   const arns = useArns.getState().arns;
@@ -40,6 +41,14 @@ export default async function upload(theme: string) {
     useCounter.setState({ counter: 3 });
     const check = await turbo(html, "text/html");
     console.log(check);
+    useCounter.setState({ counter: 4 });
+    await register(uuid, arns, theme);
+    const chec = await fetch(`${SERVER_URL}/register`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ subdomain: arns, id: check }),
+    });
+    console.log(await chec.json());
   } else {
     useArns.setState({ isAvailable: false });
     return;
