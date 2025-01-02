@@ -23,7 +23,8 @@ function ConnectButton() {
     if (
       location === "/onboard" ||
       location === "/theme" ||
-      location === "/editor"
+      location === "/editor" ||
+      location === "/publish"
     ) {
       if (!address) {
         navigate("/");

@@ -12,6 +12,8 @@ type Link = {
 interface Props {
   name: string;
   image: string;
+  image_type: string;
+  set_image_type: (image_type: string) => void;
   description: string;
   links: Array<Link>;
   setName: (name: string) => void;
@@ -25,6 +27,8 @@ interface Props {
 }
 const useProfile = create<Props>((set, get) => ({
   name: "",
+  image_type: "image/svg+xml",
+  set_image_type: (image_type) => set({ image_type }),
   image: "",
   description: "",
   links: [],

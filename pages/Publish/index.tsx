@@ -2,35 +2,48 @@ import { useEffect, useState } from "react";
 import ConnectButton from "../../components/ConnectButton";
 import { FaCheck, FaSpinner } from "react-icons/fa";
 import BG from "./BG";
+import useCounter from "../../store/useCounter";
+import useArns from "../../store/useArns";
+import upload from "../../utils/upload";
+import { useNavigate, useSearchParams } from "react-router-dom";
+
 const steps = [
+  "Setting up Arns Record",
   "Uploading Image",
   "Generating Content",
   "Uploading Content",
-  "Setting up Arns Record",
-  "Registering on Arns",
+  "Writing on Process",
   "Finalizing",
 ];
 
 function Publish() {
-  const [currentStep, setCurrentStep] = useState(0);
-  const [arnsName, setArnsName] = useState("");
-  const [isArnsInputVisible, setIsArnsInputVisible] = useState(false);
-
+  const currentStep = useCounter((state) => state.counter);
+  const setCurrentStep = useCounter((state) => state.setCounter);
+  const arnsName = useArns((state) => state.arns);
+  const setArnsName = useArns((state) => state.setArns);
+  const loading = useArns((state) => state.loading);
+  const isavailable = useArns((state) => state.isAvailable);
+  const [searchParams] = useSearchParams();
+  const theme = searchParams.get("theme");
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!theme) {
+      navigate("/theme");
+    }
+  }, [theme]);
   const handleArnsSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (arnsName) {
-      setIsArnsInputVisible(false);
-      setCurrentStep(currentStep + 1);
+      upload(theme!).then().catch(console.error);
     }
   };
+
   useEffect(() => {
-    setTimeout(() => {
-      setCurrentStep(currentStep + 1);
-    }, 2000);
-  });
+    setCurrentStep(0);
+  }, []);
 
   return (
-    <div className="min-h-screen  p-6 font-mono">
+    <div className="min-h-screen p-6 font-mono">
       <BG />
       <nav className="flex items-center justify-between mb-8">
         <div className="text-2xl font-bold bg-black text-white px-4 py-2">
@@ -42,7 +55,7 @@ function Publish() {
         <div className="p-8 relative">
           <AnimatedTitle />
           {/* Offset shadow */}
-          <div className="absolute -right-4 -bottom-4 w-full h-full  -z-10" />
+          <div className="absolute -right-4 -bottom-4 w-full h-full -z-10" />
           {/* Steps Container */}
           <div className="space-y-6">
             {steps.map((step, index) => (
@@ -92,18 +105,7 @@ function Publish() {
                       <h3 className="font-bold text-xl">{step}</h3>
 
                       {/* ARNS Input Form */}
-                      {index === 3 &&
-                        currentStep === 3 &&
-                        !isArnsInputVisible && (
-                          <button
-                            onClick={() => setIsArnsInputVisible(true)}
-                            className="mt-4 bg-black text-yellow-300 px-4 py-2 font-bold hover:bg-yellow-300 hover:text-black border-2 border-black transition-colors"
-                          >
-                            Set ARNS Name
-                          </button>
-                        )}
-
-                      {index === 3 && isArnsInputVisible && (
+                      {index === 0 && currentStep === 0 && (
                         <form
                           onSubmit={handleArnsSubmit}
                           className="mt-4 space-y-4"
@@ -124,6 +126,16 @@ function Publish() {
                               Submit
                             </button>
                           </div>
+                          {loading && (
+                            <div className="text-black font-bold mt-2">
+                              Checking...
+                            </div>
+                          )}
+                          {!loading && isavailable === false && (
+                            <div className="text-red-500 font-bold mt-2">
+                              Domain is not available
+                            </div>
+                          )}
                         </form>
                       )}
 

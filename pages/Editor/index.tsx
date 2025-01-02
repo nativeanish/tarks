@@ -11,7 +11,6 @@ import { useEffect } from "react";
 import themes from "../../constants/themes";
 import BentoDark from "../../theme/BentoDark";
 import { FaUpload } from "react-icons/fa";
-import { generate } from "../../utils/generate";
 import ClassicLight from "../../theme/ClassicLight";
 import ClassicDark from "../../theme/ClassicDark";
 import ClassicBrut from "../../theme/ClassicBrut";
@@ -66,7 +65,7 @@ function Editor() {
             <LinkDisplay key={e} id={l.uuid} />
           ))}
           <button
-            onClick={() => generate({ name, image, description, links: link })}
+            onClick={() => navigate(`/publish?theme=${theme?.title}`)}
             className="flex w-full items-center shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] justify-center gap-x-2 border-2 border-black bg-yellow-300 p-2
                      font-mono font-bold transition-all duration-200 hover:-translate-y-0.5 
                      hover:bg-yellow-400 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:translate-y-0"

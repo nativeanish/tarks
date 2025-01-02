@@ -17,16 +17,17 @@ function ImageUploader() {
       );
     }
   }, []);
-
+  const set_image_type = useProfile((state) => state.set_image_type);
   const regenerate = () => {
+    set_image_type("image/svg+xml");
     setImage(
       `data:image/svg+xml;base64,${btoa(getRandomAvatar(25) as string)}`
     );
   };
-
   const upload = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const fileType = e.target.files[0].type;
+      set_image_type(fileType);
       if (
         fileType === "image/png" ||
         fileType === "image/svg+xml" ||
